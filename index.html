@@ -2,11 +2,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>SIMON</title>
 <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
 <div id="caja">
+
 	<ul class="botones">
 		<li>
 			<img style="opacity:0.2" id="botonRojo" alt="" src="img/botonRojo.png">
@@ -32,32 +33,21 @@
 <audio id="audioBotonAzul" src="audio/audioBotonAzul.mp3"></audio>
 <audio id="audioBotonAmarillo" src="audio/audioBotonAmarillo.mp3"></audio>
 
-<script type="text/javascript">
+<script type="text/javascript" src="botones.js">
 
-/**
- * This JavaScript function always returns a random 
- * number between min and max (both included)
- * 
- * @url https://www.w3schools.com/js/js_random.asp
- * 
- * @param min Number min  random 
- * @param max Number max random
- * @returns int Random Number
- */
-function getRndInteger(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) ) + min;
-}
- 
- 
 var arrNumeros = [];
-//arrayNumeros= variable de reproducción que estoy definiendo yo. Se convierte al azar más adelante, al sumarle un pos++.
+// Definimos una variable de tipo array con 4 posibles valores, (uno por cada color) y la llamamos "arrayNumeros".
+//Mediante pos=0, indicamos que se coloque en la primera posición del array. 
 var pos=0;
-//pos= variable de posición que empieza desde 0.
-
+//A continuación definimos las variables del array y les asociamos un id por cada botón.
 var botonRojo=1;
 var botonVerde=2;
 var botonAzul=3;
 var botonAmarillo=4;
+
+//Para comenzar el juego, al hacer click en "Empezar" llamamos a la función "getRndInteger". 
+//Utilizamos el método push para colocarlo dentro del array, empezando por la posición 0. 
+//Llamamos la función "replay" para obtener las siguientes posiciones del array.
 
 document.getElementById('start').onclick=function(){
    arrNumeros.push(getRndInteger(1,4));
@@ -65,59 +55,11 @@ document.getElementById('start').onclick=function(){
    replay();
 }
 
-function reproducir(){
-
-	//(arrNumeros[pos]==1) cuando la posición es igual a 1, se enciende y se apaga la opacidad, y se reproduce el audio.
-
-		if (arrNumeros[pos]==1){   
-			document.getElementById('botonRojo').style.opacity='1';
-			document.getElementById('audioBotonRojo').play();
-			setTimeout(function(){
-				document.getElementById('botonRojo').style.opacity='0.2';
-			},500); 	
-
-	//(arrNumeros[pos]==2) cuando la posición es igual a 2, se enciende y se apaga la opacidad, y se reproduce el audio.
-
-		}else if (arrNumeros[pos]==2){   
-			document.getElementById('botonVerde').style.opacity='1';
-			document.getElementById('audioBotonVerde').play();
-			setTimeout(function(){
-				document.getElementById('botonVerde').style.opacity='0.2';
-			},500); 
-		}else if (arrNumeros[pos]==3){  
-//(arrNumeros[pos]==3) cuando la posición es igual a 3, se enciende y se apaga la opacidad, y se reproduce el audio.
-
-			document.getElementById('botonAzul').style.opacity='1';
-			document.getElementById('audioBotonAzul').play();
-			setTimeout(function(){
-				document.getElementById('botonAzul').style.opacity='0.2';
-			},500); 
-			
-		}else {  
-//(si no) se enciende y se apaga la opacidad, y se reproduce el audio.
-
-			document.getElementById('botonAmarillo').style.opacity='1';
-			document.getElementById('audioBotonAmarillo').play();
-			setTimeout(function(){
-				document.getElementById('botonAmarillo').style.opacity='0.2';
-			},500); 
-		}
-}
-
-
-function replay(){
-//función (replay) reproduce la función (reproducir) sumándole 1 posición a la combinación.
-	console.log(pos);
-	if(pos<arrNumeros.length){
-		reproducir();
-		pos++;
-	    setTimeout(replay,1000); 
-	}else{
-		pos=0;
-	}
-}
-
-//encender cada botón cuando clicas.
+//Encender cada botón al hacer click sobre él. 
+//Incluimos la estructura "if", para que si el jugador pulsa sobre el botón que se ha reproducido,continúe el juego.
+//Si se pulsa un botón diferente al reproducido, el jugador ha perdido y sale una alerta con el mensaje "You lose!". 
+//A continuación, vaciamos el array mediante el método splice, para resetear el array y comenzar una nueva partida. 
+//Repetimos el proceso por cada botón.
 
 document.getElementById('botonRojo').onclick=function(){
 	document.getElementById('botonRojo').style.opacity='1';
@@ -128,7 +70,6 @@ document.getElementById('botonRojo').onclick=function(){
 	if(arrNumeros[pos]==1){
 		pos++;
 	    if(pos==arrNumeros.length){
-	    	//alert("empezamos");
 	    	arrNumeros.push(getRndInteger(1,4));
 	    	pos=0;
 	    	setTimeout(replay,1000); 
@@ -152,7 +93,6 @@ document.getElementById('botonVerde').onclick=function(){
 	if(arrNumeros[pos]==2){
 		pos++;
 	    if(pos==arrNumeros.length){
-	    	//alert("empezamos");
 	    	arrNumeros.push(getRndInteger(1,4));
 	    	pos=0;
 	    	 setTimeout(replay,1000); 
@@ -173,7 +113,6 @@ document.getElementById('botonAzul').onclick=function(){
 	if(arrNumeros[pos]==3){
 		pos++;
 	    if(pos==arrNumeros.length){
-	    	//alert("empezamos");
 	    	arrNumeros.push(getRndInteger(1,4));
 	    	pos=0;
 	    	 setTimeout(replay,1000); 
@@ -195,7 +134,6 @@ document.getElementById('botonAmarillo').onclick=function(){
 	if(arrNumeros[pos]==4){
 		pos++;
 	    if(pos==arrNumeros.length){
-	    	//alert("empezamos");
 	    	arrNumeros.push(getRndInteger(1,4));
 	    	pos=0;
 	    	 setTimeout(replay,1000); 
